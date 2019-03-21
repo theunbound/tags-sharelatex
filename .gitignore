@@ -2,3 +2,7 @@
 **.swo
 node_modules/*
 build.tar.gz
+
+# Emacs droppings
+*~
+*#
