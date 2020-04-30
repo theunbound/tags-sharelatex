@@ -28,7 +28,7 @@ module.exports = Tags = {
     if (callback == null) {
       callback = function(err, user) {}
     }
-    return db.tags.find({ user_id: user_id }, callback)
+    return db.tags.find( callback)
   },
 
   createTag(user_id, name, callback) {
@@ -66,8 +66,7 @@ module.exports = Tags = {
       return callback(e)
     }
     const searchOps = {
-      _id: tag_id,
-      user_id
+      _id: tag_id
     }
     const insertOperation = { $addToSet: { project_ids: project_id } }
     return db.tags.update(searchOps, insertOperation, callback)
@@ -78,8 +77,7 @@ module.exports = Tags = {
       callback = function(error) {}
     }
     const searchOps = {
-      name,
-      user_id
+      name
     }
     const insertOperation = { $addToSet: { project_ids: project_id } }
     return db.tags.update(
@@ -100,17 +98,15 @@ module.exports = Tags = {
       return callback(e)
     }
     const searchOps = {
-      _id: tag_id,
-      user_id
+      _id: tag_id
     }
     const deleteOperation = { $pull: { project_ids: project_id } }
     return db.tags.update(searchOps, deleteOperation, callback)
   },
 
   removeProjectFromAllTags(user_id, project_id, callback) {
-    const searchOps = { user_id }
     const deleteOperation = { $pull: { project_ids: project_id } }
-    return db.tags.update(searchOps, deleteOperation, { multi: true }, callback)
+    return db.tags.update( deleteOperation, { multi: true }, callback)
   },
 
   deleteTag(user_id, tag_id, callback) {
@@ -124,8 +120,7 @@ module.exports = Tags = {
     }
     return db.tags.remove(
       {
-        _id: tag_id,
-        user_id
+        _id: tag_id
       },
       callback
     )
@@ -142,8 +137,7 @@ module.exports = Tags = {
     }
     return db.tags.update(
       {
-        _id: tag_id,
-        user_id
+        _id: tag_id
       },
       {
         $set: {
